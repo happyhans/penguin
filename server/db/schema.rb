@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_01_053240) do
+ActiveRecord::Schema.define(version: 2020_01_05_011950) do
+
+  create_table "refresh_tokens", force: :cascade do |t|
+    t.string "token", null: false
+    t.datetime "expires", default: "2020-01-12 23:04:20"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_refresh_tokens_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -19,4 +28,5 @@ ActiveRecord::Schema.define(version: 2020_01_01_053240) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "refresh_tokens", "users"
 end
