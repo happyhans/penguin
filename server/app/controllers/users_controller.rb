@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
-
+  before_action :verify_user, only: [:update, :destroy]
+  
   # GET /users
   def index
     @users = User.all
@@ -42,6 +44,10 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def verify_user
+      render head: :forbidden unless @current_user ==  @user
     end
 
     # Only allow a trusted parameter "white list" through.
