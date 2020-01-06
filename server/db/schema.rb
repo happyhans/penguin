@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_05_011950) do
+ActiveRecord::Schema.define(version: 2020_01_06_033907) do
 
   create_table "refresh_tokens", force: :cascade do |t|
     t.string "token", null: false
-    t.datetime "expires", default: "2020-01-12 23:04:20"
+    t.datetime "expires"
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
