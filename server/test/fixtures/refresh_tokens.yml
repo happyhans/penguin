@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  token: MyString
+  expires: <%= DateTime.now + 7.days %>
+  token: pX27zsMN2ViQKta1bGfLmVJE
   user: one
 
 two:
-  token: MyString
+  expires: <%= DateTime.now - 1.days %>
+  token: 77TMHrHJFvFDwodq8w7Ev2m7
   user: two

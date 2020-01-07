@@ -2,8 +2,8 @@
 
 one:
   email: nan@penguin.com
-  password_digest: 123456
+  password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
 
 two:
   email: hans@corgi.com
-  password_digest: 123456
+  password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
