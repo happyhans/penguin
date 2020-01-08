@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     end
 
     def verify_user
-      render head: :forbidden unless @current_user ==  @user
+      render status: :forbidden unless @current_user == @user
     end
 
     # Only allow a trusted parameter "white list" through.
