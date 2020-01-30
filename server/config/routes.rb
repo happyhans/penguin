@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   post '/sign_in', to: 'authentication#sign_in', as: 'sign_in'
   post '/refresh_token', to: 'authentication#refresh_token', as: 'refresh_token'
-  resources :users
+  post '/sign_up', to: 'users#create'
+  
+  resources :users, except: :create
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
