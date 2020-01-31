@@ -40,6 +40,36 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
+  # POST /forgot_password
+  def forgot_password
+    @user = User.find_by_email(params[:email])
+    return head :not_found if @user.nil?
+
+    @user.generate_reset_password_token
+    if @user.save
+      return head :ok
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  # POST /reset_password/<reset_password_token>
+  def reset_password
+    @user = User.find_by_reset_password_token(params[:token])
+    return head :not_found if @user.nil?
+
+    if @user.reset_password_token_expires < DateTime.now
+      return render json: { reset_password_token: ['has expired.'] }, status: :unprocessable_entity
+    end
+
+    @user.password = params[:password]
+    if @user.save
+      return head :ok
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end      
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

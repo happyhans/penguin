@@ -70,4 +70,37 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :forbidden
   end
+
+  test "POST /forgot_password : should return 404 if user not found" do
+    post forgot_password_url, params: { email: 'dne@dne.dne' }, as: :json
+    assert_response :not_found
+  end
+  
+  test "POST /forgot_password : should return :ok (200) and generate reset_password_token if user found" do
+    post forgot_password_url, params: { email: @user.email }, as: :json
+    assert_response :ok
+    assert @user.reload.reset_password_token != nil
+    assert @user.reload.reset_password_token_expires != nil
+  end
+
+  test "POST /reset_password/:token should return :not_found (404) if reset_password_token does not exist" do
+    post reset_password_url(token: 'dnednedne'), params: { password: '12345678' }, as: :json
+    assert_response :not_found
+  end
+
+  test 'POST /reset_password/:token should return :unprocessable_entity (422) if token has expired' do
+    post reset_password_url(token: @another_user.reset_password_token), params: { password: '12345678' }, as: :json
+    assert_response :unprocessable_entity
+    assert @response.body == '{"reset_password_token":["has expired."]}'
+  end
+
+  test 'POST /reset_password/:token should return :ok (200) if reset_password is successful' do
+    @user.reset_password_token = 'abcdefg'
+    @user.reset_password_token_expires = DateTime.now + 24.hours
+    @user.save
+    
+    post reset_password_url(token: @user.reload.reset_password_token), params: { password: '12345678' }, as: :json
+    assert_response :ok
+    assert @user.reload.authenticate('12345678')
+  end
 end

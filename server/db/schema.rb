@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_033907) do
+ActiveRecord::Schema.define(version: 2020_01_30_042320) do
 
   create_table "refresh_tokens", force: :cascade do |t|
     t.string "token", null: false
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 2020_01_06_033907) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_token_expires"
   end
 
   add_foreign_key "refresh_tokens", "users"
