@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: nan@penguin.com
+  password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
+
+two:
+  email: hans@corgi.com
+  password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
+  reset_password_token: ABCDEFG
+  reset_password_token_expires: <%= DateTime.now.utc - 5.days %>
