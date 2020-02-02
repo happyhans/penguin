@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+pompom_poppop_friendship:
+  user: pompom
+  friend: poppop
+
+# This is mocked because it seems Friendship's after_create_commit
+# hook was not ran when creating pompom_poppop_friendship
+inverse_pompom_poppop_friendship:
+  user: poppop
+  friend: pompom

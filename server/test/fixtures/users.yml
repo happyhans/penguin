@@ -9,3 +9,11 @@ two:
   password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
   reset_password_token: ABCDEFG
   reset_password_token_expires: <%= DateTime.now.utc - 5.days %>
+
+pompom:
+  email: pompom@penguin.com
+  password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
+
+poppop:
+  email: poppop@penguin.com
+  password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>

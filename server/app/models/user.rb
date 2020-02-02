@@ -8,6 +8,9 @@ class User < ApplicationRecord
   
   has_many :refresh_tokens, dependent: :destroy
 
+  has_many :friendships
+  has_many :friends, through: :friendships
+  
   def generate_reset_password_token
     new_token = SecureRandom.base58(16)
     until User.find_by_reset_password_token(new_token).nil?
