@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   has_many :friendships
   has_many :friends, through: :friendships
+
+  before_save :generate_uuid
   
   def generate_reset_password_token
     new_token = SecureRandom.base58(16)
@@ -19,5 +21,16 @@ class User < ApplicationRecord
 
     self.reset_password_token = new_token
     self.reset_password_token_expires = DateTime.now + 24.hours
+  end
+
+  private
+
+  def generate_uuid
+    uuid = SecureRandom.uuid
+    until User.find_by_uuid(uuid).nil?
+      uuid = SecureRandom.uuid
+    end
+
+    self.uuid = uuid
   end
 end

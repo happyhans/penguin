@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_02_204753) do
+ActiveRecord::Schema.define(version: 2020_02_05_035250) do
 
   create_table "friendships", force: :cascade do |t|
     t.integer "user_id"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 2020_02_02_204753) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_token_expires"
+    t.string "uuid"
+    t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
   add_foreign_key "refresh_tokens", "users"

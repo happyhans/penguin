@@ -59,4 +59,12 @@ class UserTest < ActiveSupport::TestCase
 
     assert DateTime.now.utc.tomorrow.day == @user.reset_password_token_expires.day
   end
+
+  test "should generate a uuid for each new user" do
+    user = User.create(email: 'new@new.com', password: '123456')
+    assert user.uuid != nil
+    user2 = User.create(email: 'new2@new2.com', password: '123456')
+    assert user2.uuid != nil
+    assert user.uuid != user2.uuid
+  end
 end
