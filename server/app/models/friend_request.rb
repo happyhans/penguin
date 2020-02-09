@@ -5,10 +5,13 @@ class FriendRequest < ApplicationRecord
   validates :receiver, uniqueness: { scope: :sender, message: 'already has a pending friend request' }
 
   def accept
+    friendship = nil
     ActiveRecord::Base.transaction do
-      Friendship.create!(user: sender, friend: receiver)
+      friendship = Friendship.create!(user: sender, friend: receiver)
       self.destroy!
     end
+
+    friendship
   end
 
   def reject

@@ -6,5 +6,7 @@ Rails.application.routes.draw do
   post '/reset_password/:token', to: 'users#reset_password', as: 'reset_password'
   
   resources :users, except: :create
+  resources :friend_requests, except: [:show]
+  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
