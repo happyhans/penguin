@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_05_035250) do
+ActiveRecord::Schema.define(version: 2020_02_05_042006) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "friend_requests", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sender_id", "receiver_id"], name: "index_friend_requests_on_sender_id_and_receiver_id", unique: true
+  end
 
   create_table "friendships", force: :cascade do |t|
     t.integer "user_id"
@@ -23,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_02_05_035250) do
   create_table "refresh_tokens", force: :cascade do |t|
     t.string "token", null: false
     t.datetime "expires"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_refresh_tokens_on_user_id"
@@ -40,5 +51,7 @@ ActiveRecord::Schema.define(version: 2020_02_05_035250) do
     t.index ["uuid"], name: "index_users_on_uuid", unique: true
   end
 
+  add_foreign_key "friend_requests", "users", column: "receiver_id"
+  add_foreign_key "friend_requests", "users", column: "sender_id"
   add_foreign_key "refresh_tokens", "users"
 end

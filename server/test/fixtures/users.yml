@@ -17,3 +17,12 @@ pompom:
 poppop:
   email: poppop@penguin.com
   password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
+
+yuta:
+  email: yuta@dog.com
+  password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
+
+bella:
+  email: bella@cat.com
+  password_digest: <%= BCrypt::Password.create("123456", cost: 4) %>
+

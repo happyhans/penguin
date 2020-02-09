@@ -11,6 +11,9 @@ class User < ApplicationRecord
   has_many :friendships
   has_many :friends, through: :friendships
 
+  has_many :incoming_friend_requests, class_name: 'FriendRequest', foreign_key: 'receiver_id', dependent: :destroy
+  has_many :outgoing_friend_requests, class_name: 'FriendRequest', foreign_key: 'sender_id', dependent: :destroy
+  
   before_save :generate_uuid
   
   def generate_reset_password_token
