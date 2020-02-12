@@ -21,8 +21,8 @@ class FriendRequestsControllerTest < ActionDispatch::IntegrationTest
 
     response_json = JSON.parse(response.body)
     
-    assert response_json["incoming"] == JSON.parse(@user.incoming_friend_requests.to_json)
-    assert response_json["outgoing"] == JSON.parse(@user.outgoing_friend_requests.to_json)
+    assert response_json["incoming"] == JSON.parse(FriendRequestSerializer.new(@user.incoming_friend_requests).serialized_json)
+    assert response_json["outgoing"] == JSON.parse(FriendRequestSerializer.new(@user.outgoing_friend_requests).serialized_json)
   end
 
   test "should not get index without auth" do

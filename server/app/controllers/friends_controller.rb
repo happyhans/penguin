@@ -3,8 +3,9 @@ class FriendsController < ApplicationController
   before_action :set_friendship, only: [:destroy]
   
   def index
-    @friends = @current_user.friends
-    render json: @friends
+    @friendships = @current_user.friendships
+    json = FriendshipSerializer.new(@friendships).serialized_json
+    render json: json
   end
 
   def destroy

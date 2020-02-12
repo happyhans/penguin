@@ -13,7 +13,7 @@ class FriendsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get friends_url, as: :json, headers: @user_header
     assert_response :success
-    assert response.body == @user.friends.to_json
+    assert response.body == FriendshipSerializer.new(@user.friendships).serialized_json
   end
 
   test "should not get index without auth" do
