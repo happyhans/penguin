@@ -18,8 +18,9 @@ class Friendship < ApplicationRecord
 
   def destroy_inverse_relationship
     inverse_relationship = Friendship.find_by(friend: self.user, user: self.friend)
-    unless inverse_relationship.nil?
-      inverse_relationship.destroy
+
+    if inverse_relationship
+      inverse_relationship.destroy!
     end
   end
 end
