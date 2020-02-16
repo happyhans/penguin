@@ -21,7 +21,7 @@ class AuthenticationController < ApplicationController
       }
 
       jwt = JWT.encode payload, Rails.application.secret_key_base, 'HS256'
-      refresh_token = RefreshToken.new(user: user)
+      refresh_token = RefreshToken.new(user: user, expires: DateTime.now.utc + 7.days)
       return head :internal_server_error unless refresh_token.save
       
       render json: { jwt: jwt, refresh_token: refresh_token.token }, status: :ok 
@@ -36,7 +36,7 @@ class AuthenticationController < ApplicationController
     token_record = RefreshToken.find_by_token(token)
     return head :unauthorized if token_record.nil?
 
-    if DateTime.now > token_record.expires
+    if DateTime.now.utc > token_record.expires
       return render json: { error: 'Expired refresh token.' }, status: :unauthorized
     else
       user = token_record.user

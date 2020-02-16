@@ -2,11 +2,11 @@ require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
+    @user = create(:random_user)
     post sign_in_url, params: { email: @user.email, password: '123456' }, as: :json
     @user_jwt = (JSON.parse @response.body)['jwt']
 
-    @another_user = users(:two)
+    @another_user = create(:random_user_with_expired_reset_pass_token)
     post sign_in_url, params: { email: @another_user.email, password: '123456' }, as: :json
     @another_user_jwt = (JSON.parse @response.body)['jwt']
   end
@@ -90,6 +90,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'POST /reset_password/:token should return :unprocessable_entity (422) if token has expired' do
     post reset_password_url(token: @another_user.reset_password_token), params: { password: '12345678' }, as: :json
+    
     assert_response :unprocessable_entity
     assert @response.body == '{"reset_password_token":["has expired."]}'
   end

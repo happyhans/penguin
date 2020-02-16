@@ -2,12 +2,10 @@ require 'test_helper'
 
 class FriendshipTest < ActiveSupport::TestCase
   setup do
-    @user = users(:one)
-    @another_user = users(:two)
+    @user = create(:random_user)
+    @another_user = create(:random_user)
 
-    @pompom = users(:pompom)
-    @poppop = users(:poppop)    
-    @existing_friendship = friendships(:pompom_poppop_friendship)
+    @existing_friendship = create(:friendship)
   end
 
   test "both user and friend should exist in the friendship" do
@@ -20,7 +18,7 @@ class FriendshipTest < ActiveSupport::TestCase
   end
 
   test "duplicate friendship should not exist" do
-    friendship = Friendship.create(user: @pompom, friend: @poppop)
+    friendship = Friendship.create(user: @existing_friendship.user, friend: @existing_friendship.friend)
     assert_not friendship.save
     assert friendship.errors.full_messages == ['Friend already exists in friends list']
   end
@@ -32,6 +30,6 @@ class FriendshipTest < ActiveSupport::TestCase
 
   test "inverse friendship/relationship should be destroyed on success" do
     @existing_friendship.destroy
-    assert Friendship.find_by(user: @poppop, friend: @pompom).nil?
+    assert Friendship.find_by(user: @existing_friendship.friend, friend: @existing_friendship.user).nil?
   end
 end

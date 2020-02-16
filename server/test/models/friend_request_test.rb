@@ -2,10 +2,10 @@ require 'test_helper'
 
 class FriendRequestTest < ActiveSupport::TestCase
   setup do
-    @existing_friend_request = friend_requests(:one)
+    @existing_friend_request = create(:friend_request)
 
-    @yuta = users(:yuta)
-    @bella = users(:bella)
+    @user = create(:random_user)
+    @another_user = create(:random_user)
   end
 
   test "should prevent duplicate friend request from being created" do
@@ -34,7 +34,7 @@ class FriendRequestTest < ActiveSupport::TestCase
 
   test "saves valid, unique friend request" do
     assert_difference('FriendRequest.count', 1) do
-      FriendRequest.create(sender: @yuta, receiver: @bella)
+      FriendRequest.create(sender: @user, receiver: @another_user)
     end
   end
 end

@@ -22,6 +22,12 @@ gem 'jwt'
 # Model JSON serializer
 gem 'fast_jsonapi'
 
+# Factories for tests instead of Fixtures
+gem 'factory_bot_rails'
+
+# Faker for generating random data for test factories
+gem 'faker'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

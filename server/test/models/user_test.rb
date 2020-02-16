@@ -1,11 +1,11 @@
 require 'test_helper'
 
-class UserTest < ActiveSupport::TestCase
+class UserTest < ActiveSupport::TestCase  
   VALID_PASSWORD = '123456'
   
   setup do
-    @user = users(:one)
-    @another_user = users(:two)
+    @user = create(:user)
+    @another_user = create(:user, email: 'hans@corgi.com')
   end
 
   test "should not save a user without an email" do

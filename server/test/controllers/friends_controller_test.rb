@@ -2,8 +2,8 @@ require 'test_helper'
 
 class FriendsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @existing_friendship = friendships(:pompom_poppop_friendship)
-    @user = users(:pompom)
+    @user = create(:user)
+    @existing_friendship = create(:friendship, user: @user)
 
     post sign_in_url, params: { email: @user.email, password: '123456' }, as: :json
     user_jwt = (JSON.parse @response.body)['jwt']
