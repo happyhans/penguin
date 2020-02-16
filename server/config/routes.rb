@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   
   resources :users, except: :create
   resources :friend_requests, except: [:show]
+  
   resources :friends, only: [:index, :destroy]
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

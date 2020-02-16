@@ -32,14 +32,14 @@ class FriendRequestsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create friend request" do
     assert_difference('FriendRequest.count') do
-      post friend_requests_url, as: :json, params: { receiver_id: @another_user.id }, headers: @user_header
+      post friend_requests_url, as: :json, params: { user_uuid: @another_user.uuid }, headers: @user_header
     end
     assert_response :created
   end
 
   test "should not create friend request without auth" do
     assert_no_difference('FriendRequest.count') do
-      post friend_requests_url, as: :json, params: { receiver_id: @another_user.id }
+      post friend_requests_url, as: :json, params: { user_uuid: @another_user.uuid }
     end
     assert_response :unauthorized
   end

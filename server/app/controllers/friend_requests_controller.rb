@@ -12,7 +12,7 @@ class FriendRequestsController < ApplicationController
   end
 
   def create
-    @friend_request = @current_user.outgoing_friend_requests.new(receiver_id: params[:receiver_id])
+    @friend_request = @current_user.outgoing_friend_requests.new(receiver: User.find_by_uuid(params[:user_uuid]))
 
     if @friend_request.save
       json = FriendRequestSerializer.new(@friend_request).serialized_json
