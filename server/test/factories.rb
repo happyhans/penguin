@@ -43,6 +43,19 @@ FactoryBot.define do
 
     factory :expired_refresh_token, traits: [:expired]
   end
+
+  factory :conversation do
+  end
+
+  factory :message do
+    body { Faker::Lorem.sentence }
+
+    trait :blank do
+      body { '' }
+    end
+
+    factory :blank_message, traits: [:blank]
+  end
 end
 
 
