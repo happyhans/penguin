@@ -67,4 +67,9 @@ class UserTest < ActiveSupport::TestCase
     assert user2.uuid != nil
     assert user.uuid != user2.uuid
   end
+
+  test "user should not have admin priveleges by default" do
+    user = create(:random_user)
+    assert_not user.reload.admin
+  end
 end
