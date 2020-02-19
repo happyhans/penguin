@@ -7,6 +7,8 @@ class Post < ApplicationRecord
   
   validate :user_must_be_an_admin
 
+  has_many :comments, as: :commentable, dependent: :destroy
+  
   private
 
   def user_must_be_an_admin

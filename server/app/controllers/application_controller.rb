@@ -17,4 +17,10 @@ class ApplicationController < ActionController::API
       return render plain: 'A token must be passed.', status: :unauthorized
     end
   end
+
+  def require_admin
+    if @current_user.nil? || !@current_user.admin
+      return head :forbidden
+    end
+  end
 end
