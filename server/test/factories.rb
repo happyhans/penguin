@@ -1,8 +1,4 @@
 FactoryBot.define do
-  factory :post do
-    
-  end
-
   factory :user do
     email { 'nan@penguin.com' }
     password { '123456' }
@@ -71,6 +67,18 @@ FactoryBot.define do
     end
 
     factory :blank_message, traits: [:blank]
+  end
+
+  factory :post do
+    title { Faker::Lorem.sentence }
+    body { Faker::Lorem.sentence }
+    association :user, factory: :random_admin_user
+  end
+
+  factory :comment do
+    body { Faker::Lorem.sentence }
+    association :user, factory: :random_user
+    association :commentable, factory: :post
   end
 end
 
