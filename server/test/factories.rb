@@ -1,7 +1,17 @@
 FactoryBot.define do
+  factory :post do
+    
+  end
+
   factory :user do
     email { 'nan@penguin.com' }
     password { '123456' }
+
+    trait :admin do
+      admin { true }
+    end
+
+    factory :admin_user, traits: [:admin]
   end
 
   factory :random_user, class: 'User' do
@@ -17,6 +27,12 @@ FactoryBot.define do
       reset_password_token { 'ABCDEFG' }
       reset_password_token_expires { DateTime.now.utc - 5.days }      
     end
+
+    trait :admin do
+      admin { true }
+    end
+
+    factory :random_admin_user, traits: [:admin]
     
     factory :random_user_with_reset_pass_token, traits: [:reset_pass_token]
     factory :random_user_with_expired_reset_pass_token, traits: [:expired_reset_pass_token]
