@@ -20,6 +20,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test 'should get index' do
     get posts_url, as: :json
     assert_response :ok
+    assert response.body == PostSerializer.new(Post.all).serialized_json
   end
 
   test 'should create post' do
@@ -28,6 +29,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :created
+    assert response.body == PostSerializer.new(Post.last).serialized_json
   end
 
   test 'should not create post without auth' do
@@ -50,12 +52,14 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     patch post_url(id: @post.id), params: { post: { title: 'Updated title!' }}, as: :json, headers: @admin_header
     assert_response :ok
     assert @post.reload.title == 'Updated title!'
+    assert response.body == PostSerializer.new(@post.reload).serialized_json
   end
 
   test 'should update another post as non-author' do
     patch post_url(id: @another_post.id), params: { post: { title: 'Updated title!' }}, as: :json, headers: @admin_header
     assert_response :ok
-    assert @another_post.reload.title == 'Updated title!'    
+    assert @another_post.reload.title == 'Updated title!'
+    assert response.body == PostSerializer.new(@another_post.reload).serialized_json
   end
 
   test 'should not update post without auth' do
